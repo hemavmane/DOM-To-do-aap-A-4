@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meals APP</title>
+    <link rel="stylesheet" href="./fetch.css">
+</head>
+<body>
+    <div>
+        <input type="text" class="input1" placeholder="Enter here!">
+        <button class="btn" id="btn1" type="submit">Submit</button>
+    </div>
+  <div class="content"></div>
+</body>
+<script>
+    let but = document.getElementById("btn1")
+    let inputdata=document.querySelector(".input1")
+    let container=document.querySelector(".content")
+    but.addEventListener("click",()=>{
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputdata.value}`)
+   .then(res=>res.json())
+   .then(data=>{
+    // console.log(data);
+
+    for(let i =0; i<data["meals"].length; i++){
+        let data1=data["meals"][i]
+        let data2=`<div class"main">
+                <div class="left">
+                  <h1>${data1.strMeal}</h1>
+                  <div class="left1">
+                    <img src="${data1.strMealThumb}" width="200px" height="100px"/>
+                    </div>
+                  <p>${data1.strInstructions}</p>
+                </div>
+              </div>`
+              container.innerHTML+=data2
+    }
+   })
+   })
+</script>
+</html>
